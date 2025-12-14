@@ -42,372 +42,347 @@ class _BmiCalculatorPageState extends State<BmiCalculatorPage> {
         foregroundColor: kActiveTextColor,
       ),
 
-      body: Container(
-        width: double.infinity,
+      body: Padding(
+        padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(32),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isMale = true;
+                      });
+                      var bmiValue = calculateBMI(
+                        weight: weight,
+                        height: height,
+                      );
+
+                      setState(() {
+                        bmi = bmiValue;
+                      });
+                    },
+                    child: Container(
+                      decoration: isMale
+                          ? kSelectedTileBorderDecoration
+                          : kTileBorderDecoration,
+                      padding: const EdgeInsets.all(20),
+                      child: const Column(
+                        children: [
+                          Icon(Icons.male, size: 50, color: kActiveTextColor),
+                          Text(
+                            "Male",
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: kActiveTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                Spacer(),
+
+                Expanded(
+                  flex: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isMale = false;
+                      });
+                      var bmiValue = calculateBMI(
+                        weight: weight,
+                        height: height,
+                      );
+
+                      setState(() {
+                        bmi = bmiValue;
+                      });
+                    },
+                    child: Container(
+                      decoration: !isMale
+                          ? kSelectedTileBorderDecoration
+                          : kTileBorderDecoration,
+                      padding: const EdgeInsets.all(20),
+                      child: const Column(
+                        children: [
+                          Icon(
+                            Icons.female,
+                            size: 50,
+                            color: kInactiveTextColor,
+                          ),
+                          Text(
+                            "Female",
+                            style: TextStyle(
+                              color: kInactiveTextColor,
+                              fontSize: 30,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 20),
+
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kTileColor,
+              ),
+
+              padding: EdgeInsets.all(20),
               child: Column(
                 children: [
+                  Text("Height", style: TextStyle(color: kActiveTextColor)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        flex: 10,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMale = true;
-                            });
-                            var bmiValue = calculateBMI(
-                              weight: weight,
-                              height: height,
-                            );
-
-                            setState(() {
-                              bmi = bmiValue;
-                            });
-                          },
-                          child: Container(
-                            decoration: isMale
-                                ? kSelectedTileBorderDecoration
-                                : kTileBorderDecoration,
-                            padding: const EdgeInsets.all(20),
-                            child: const Column(
-                              children: [
-                                Icon(
-                                  Icons.male,
-                                  size: 50,
-                                  color: kActiveTextColor,
-                                ),
-                                Text(
-                                  "Male",
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    color: kActiveTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                      Text(
+                        height.toStringAsFixed(1),
+                        style: TextStyle(
+                          color: kActiveTextColor,
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-
-                      Spacer(),
-
-                      Expanded(
-                        flex: 10,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMale = false;
-                            });
-                            var bmiValue = calculateBMI(
-                              weight: weight,
-                              height: height,
-                            );
-
-                            setState(() {
-                              bmi = bmiValue;
-                            });
-                          },
-                          child: Container(
-                            decoration: !isMale
-                                ? kSelectedTileBorderDecoration
-                                : kTileBorderDecoration,
-                            padding: const EdgeInsets.all(20),
-                            child: const Column(
-                              children: [
-                                Icon(
-                                  Icons.female,
-                                  size: 50,
-                                  color: kInactiveTextColor,
-                                ),
-                                Text(
-                                  "Female",
-                                  style: TextStyle(
-                                    color: kInactiveTextColor,
-                                    fontSize: 30,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      Text("cm", style: TextStyle(color: kActiveTextColor)),
                     ],
                   ),
+                  Slider(
+                    thumbColor: kButtonClolor,
+                    activeColor: Colors.white,
+                    min: 80,
+                    max: 200,
+                    value: height,
+                    onChanged: (val) {
+                      setState(() {
+                        height = val;
+                      });
+                      var bmiValue = calculateBMI(
+                        weight: weight,
+                        height: height,
+                      );
 
-                  SizedBox(height: 20),
+                      setState(() {
+                        bmi = bmiValue;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
 
-                  Container(
+            SizedBox(height: 20),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: kTileColor,
                     ),
-
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        Text(
-                          "Height",
+                        const Text(
+                          "WEIGHT",
                           style: TextStyle(color: kActiveTextColor),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              height.toStringAsFixed(1),
+                              "$weight",
                               style: TextStyle(
                                 color: kActiveTextColor,
-                                fontSize: 50,
+                                fontSize: 45,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              "cm",
+                            const Text(
+                              "kg",
                               style: TextStyle(color: kActiveTextColor),
                             ),
                           ],
                         ),
-                        Slider(
-                          thumbColor: kButtonClolor,
-                          activeColor: Colors.white,
-                          min: 80,
-                          max: 200,
-                          value: height,
-                          onChanged: (val) {
-                            setState(() {
-                              height = val;
-                            });
-                            var bmiValue = calculateBMI(
-                              weight: weight,
-                              height: height,
-                            );
+                        Row(
+                          children: [
+                            FloatingActionButton(
+                              elevation: 0,
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                64,
+                                37,
+                                96,
+                              ),
+                              shape: ShapeBorder.lerp(
+                                CircleBorder(),
+                                CircleBorder(),
+                                0.2,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  if (weight > 25) {
+                                    weight--;
+                                  }
+                                });
+                                var bmiValue = calculateBMI(
+                                  weight: weight,
+                                  height: height,
+                                );
 
-                            setState(() {
-                              bmi = bmiValue;
-                            });
-                          },
+                                setState(() {
+                                  bmi = bmiValue;
+                                });
+                              },
+                              child: Icon(Icons.remove, color: Colors.white),
+                            ),
+
+                            SizedBox(width: 10),
+
+                            FloatingActionButton(
+                              elevation: 0,
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                64,
+                                37,
+                                96,
+                              ),
+                              shape: ShapeBorder.lerp(
+                                CircleBorder(),
+                                CircleBorder(),
+                                0.2,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  if (weight < 250) {
+                                    weight++;
+                                  }
+                                });
+                                var bmiValue = calculateBMI(
+                                  weight: weight,
+                                  height: height,
+                                );
+
+                                setState(() {
+                                  bmi = bmiValue;
+                                });
+                              },
+                              child: Icon(Icons.add, color: Colors.white),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
+                ),
 
-                  SizedBox(height: 20),
+                SizedBox(width: 10),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: kTileColor,
-                          ),
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              const Text(
-                                "WEIGHT",
-                                style: TextStyle(color: kActiveTextColor),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "$weight",
-                                    style: TextStyle(
-                                      color: kActiveTextColor,
-                                      fontSize: 45,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const Text(
-                                    "kg",
-                                    style: TextStyle(color: kActiveTextColor),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  FloatingActionButton(
-                                    elevation: 0,
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      64,
-                                      37,
-                                      96,
-                                    ),
-                                    shape: ShapeBorder.lerp(
-                                      CircleBorder(),
-                                      CircleBorder(),
-                                      0.2,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (weight > 25) {
-                                          weight--;
-                                        }
-                                      });
-                                      var bmiValue = calculateBMI(
-                                        weight: weight,
-                                        height: height,
-                                      );
-
-                                      setState(() {
-                                        bmi = bmiValue;
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-
-                                  SizedBox(width: 10),
-
-                                  FloatingActionButton(
-                                    elevation: 0,
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      64,
-                                      37,
-                                      96,
-                                    ),
-                                    shape: ShapeBorder.lerp(
-                                      CircleBorder(),
-                                      CircleBorder(),
-                                      0.2,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (weight < 250) {
-                                          weight++;
-                                        }
-                                      });
-                                      var bmiValue = calculateBMI(
-                                        weight: weight,
-                                        height: height,
-                                      );
-
-                                      setState(() {
-                                        bmi = bmiValue;
-                                      });
-                                    },
-                                    child: Icon(Icons.add, color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            ],
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: kTileColor,
+                    ),
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Text("AGE", style: TextStyle(color: kActiveTextColor)),
+                        Text(
+                          "$age",
+                          style: TextStyle(
+                            color: kActiveTextColor,
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-
-                      SizedBox(width: 10),
-
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: kTileColor,
-                          ),
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              Text(
-                                "AGE",
-                                style: TextStyle(color: kActiveTextColor),
+                        Row(
+                          children: [
+                            FloatingActionButton(
+                              elevation: 0,
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                64,
+                                37,
+                                96,
                               ),
-                              Text(
-                                "$age",
-                                style: TextStyle(
-                                  color: kActiveTextColor,
-                                  fontSize: 45,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              shape: ShapeBorder.lerp(
+                                CircleBorder(),
+                                CircleBorder(),
+                                0.2,
                               ),
-                              Row(
-                                children: [
-                                  FloatingActionButton(
-                                    elevation: 0,
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      64,
-                                      37,
-                                      96,
-                                    ),
-                                    shape: ShapeBorder.lerp(
-                                      CircleBorder(),
-                                      CircleBorder(),
-                                      0.2,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (age > 0) {
-                                          age--;
-                                        }
-                                      });
-                                      var bmiValue = calculateBMI(
-                                        weight: weight,
-                                        height: height,
-                                      );
+                              onPressed: () {
+                                setState(() {
+                                  if (age > 0) {
+                                    age--;
+                                  }
+                                });
+                                var bmiValue = calculateBMI(
+                                  weight: weight,
+                                  height: height,
+                                );
 
-                                      setState(() {
-                                        bmi = bmiValue;
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                setState(() {
+                                  bmi = bmiValue;
+                                });
+                              },
+                              child: Icon(Icons.remove, color: Colors.white),
+                            ),
 
-                                  SizedBox(width: 10),
+                            SizedBox(width: 10),
 
-                                  FloatingActionButton(
-                                    elevation: 0,
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      64,
-                                      37,
-                                      96,
-                                    ),
-                                    shape: ShapeBorder.lerp(
-                                      CircleBorder(),
-                                      CircleBorder(),
-                                      0.2,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        age++;
-                                      });
-
-                                      var bmiValue = calculateBMI(
-                                        weight: weight,
-                                        height: height,
-                                      );
-
-                                      setState(() {
-                                        bmi = bmiValue;
-                                      });
-                                    },
-                                    child: Icon(Icons.add, color: Colors.white),
-                                  ),
-                                ],
+                            FloatingActionButton(
+                              elevation: 0,
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                64,
+                                37,
+                                96,
                               ),
-                            ],
-                          ),
+                              shape: ShapeBorder.lerp(
+                                CircleBorder(),
+                                CircleBorder(),
+                                0.2,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  age++;
+                                });
+
+                                var bmiValue = calculateBMI(
+                                  weight: weight,
+                                  height: height,
+                                );
+
+                                setState(() {
+                                  bmi = bmiValue;
+                                });
+                              },
+                              child: Icon(Icons.add, color: Colors.white),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+            SizedBox(height: 20),
             Container(
               decoration: kTileBorderDecoration,
               padding: const EdgeInsets.all(20),
